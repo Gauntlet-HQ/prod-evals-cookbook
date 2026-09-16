@@ -10,7 +10,7 @@ test_cases:
   # ==========================================================================
   # VECTOR SEARCH - Document queries
   # ==========================================================================
-  
+
   - id: "gs-001"
     category: "vector_search"
     query: "What is our remote work policy?"
@@ -21,7 +21,7 @@ test_cases:
     must_contain:
       - "remote"
       - "core hours"
-      - "10"  # 10 AM core hours
+      - "10" # 10 AM core hours
     must_not_contain:
       - "I don't know"
       - "I cannot find"
@@ -101,7 +101,7 @@ test_cases:
       - sql_query
     must_contain:
       - "refund"
-      - "8"  # There are 8 refunds in Q4 2024
+      - "8" # There are 8 refunds in Q4 2024
     must_not_contain:
       - "error"
 
@@ -126,7 +126,7 @@ test_cases:
     expected_tools:
       - jira_search
     must_contain:
-      - "PLAT-1247"  # The P0 auth bug
+      - "PLAT-1247" # The P0 auth bug
     must_not_contain:
       - "no bugs"
       - "I cannot find"
@@ -137,7 +137,7 @@ test_cases:
     expected_tools:
       - jira_search
     must_contain:
-      - "MOB-892"  # The iOS crash bug
+      - "MOB-892" # The iOS crash bug
       - "crash"
     must_not_contain:
       - "no issues"
@@ -152,7 +152,7 @@ test_cases:
     expected_tools:
       - slack_search
     must_contain:
-      - "Kafka"  # They decided to migrate to Kafka
+      - "Kafka" # They decided to migrate to Kafka
     must_not_contain:
       - "no discussion"
       - "I cannot find"
@@ -164,7 +164,7 @@ test_cases:
       - slack_search
     must_contain:
       - "incident"
-      - "auth"  # The auth incident
+      - "auth" # The auth incident
     must_not_contain:
       - "no incidents"
 
@@ -182,8 +182,8 @@ test_cases:
       - refund_policy.md
     must_contain:
       - "refund"
-      - "30 days"  # 30-day refund window from policy
-      - "8"  # 8 refunds in Q4
+      - "30 days" # 30-day refund window from policy
+      - "8" # 8 refunds in Q4
     must_not_contain:
       - "I don't know"
 
@@ -194,7 +194,7 @@ test_cases:
       - jira_search
       - vector_search
     must_contain:
-      - "PLAT-1247"  # Auth bug
+      - "PLAT-1247" # Auth bug
       - "incident"
     must_not_contain:
       - "no bugs"
@@ -202,11 +202,10 @@ test_cases:
   # ==========================================================================
   # EDGE CASES
   # ==========================================================================
-
   - id: "gs-015"
     category: "edge_case"
     query: "What is the meaning of life?"
-    expected_tools: []  # Should not call any tools for off-topic
+    expected_tools: [] # Should not call any tools for off-topic
     must_contain:
-      - "Acme"  # Should redirect to what it CAN help with
+      - "Acme" # Should redirect to what it CAN help with
     # Note: We expect it to politely decline and redirect to Acme-related topics

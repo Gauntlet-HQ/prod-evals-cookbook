@@ -1,0 +1,60 @@
+test_cases:
+  - id: "fixed-001"
+    category: "drug_interaction"
+    query: "What medications interact with warfarin?"
+    expected_tools:
+      - drug_interaction_check
+    must_contain:
+      - "aspirin"
+      - "ibuprofen"
+      - "bleeding"
+    must_not_contain:
+      - "I don't know"
+      - "no interactions"
+    expected_behavior: "Agent calls drug_interaction_check with warfarin, returns known high-risk interactions with severity levels"
+
+  - id: "fixed-002"
+    category: "multi_tool"
+    query: "Tell me about our Q3 performance"
+    expected_tools:
+      - sql_query
+      - vector_search
+    must_contain:
+      - "revenue"
+      - "MRR"
+      - "Q3"
+    must_not_contain:
+      - "error"
+      - "failed"
+    expected_behavior: "Agent queries financial metrics via SQL and retrieves Q3 summary docs via vector search"
+
+  - id: "fixed-003"
+    category: "multi_tool"
+    query: "Should we increase pricing for the Enterprise tier?"
+    expected_tools:
+      - sql_query
+      - vector_search
+    expected_sources:
+      - pricing_strategy.md
+    must_contain:
+      - "Enterprise"
+      - "churn"
+      - "competitor"
+    must_not_contain:
+      - "I recommend"
+      - "you should definitely"
+    expected_behavior: "Agent retrieves current pricing docs and pulls enterprise churn/revenue data via SQL. Presents data without making a definitive recommendation, since pricing decisions require human judgment."
+
+  - id: "fixed-004"
+    category: "slack_search"
+    query: "Summarize recent engineering discussions about microservices"
+    expected_tools:
+      - slack_search
+    must_contain:
+      - "microservices"
+      - "Kafka"
+      - "migration"
+    must_not_contain:
+      - "no discussions"
+      - "I cannot find"
+    expected_behavior: "Agent searches Slack for engineering microservices discussions and surfaces the Kafka migration decision and related architecture conversations"

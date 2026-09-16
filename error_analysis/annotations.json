@@ -1,0 +1,26 @@
+{
+  "ea-001": {
+    "failure_modes": [],
+    "note": "Sources are coming in non-standard formats.",
+    "updated": "2026-09-16T15:58:13.428Z",
+    "verdict": "error"
+  },
+  "ea-002": {
+    "failure_modes": [],
+    "note": "Output fails to mention that there is no data for that time period.",
+    "updated": "2026-09-16T15:56:47.252Z",
+    "verdict": "error"
+  },
+  "ea-003": {
+    "failure_modes": [],
+    "note": "Sources are coming in non-standard formats. ",
+    "updated": "2026-09-16T15:58:06.362Z",
+    "verdict": "error"
+  },
+  "ea-005": {
+    "failure_modes": [],
+    "note": "We don't want to summarize non-business data here. We should not even bring it up.",
+    "updated": "2026-09-16T15:58:57.149Z",
+    "verdict": "error"
+  }
+}

@@ -1,0 +1,43 @@
+test_cases:
+  - id: "bad-001"
+    query: "What medications interact with warfarin?"
+    evaluation:
+      relevance: "1-5 scale"
+      helpfulness: "1-5 scale"
+      tone: "1-5 scale"
+      accuracy: "1-5 scale"
+    notes: "A good response should score at least a 4 on most dimensions"
+
+  - id: "bad-002"
+    query: "Tell me about our Q3 performance"
+    scoring:
+      tools_used:
+        3_or_more: "excellent"
+        2: "good"
+        1: "satisfactory"
+        0: "poor"
+      response_length:
+        over_500_words: "excellent"
+        300_to_500: "good"
+        100_to_300: "satisfactory"
+        under_100: "poor"
+    notes: "More tools and longer responses indicate better quality"
+
+  - id: "bad-003"
+    query: "Should we increase pricing for the Enterprise tier?"
+    evaluation:
+      criteria:
+        - "Response demonstrates strategic thinking"
+        - "Considers multiple perspectives"
+        - "Provides actionable recommendations"
+        - "Appropriate level of confidence"
+      scoring: "Evaluator assigns overall grade: A/B/C/D/F"
+
+  - id: "bad-004"
+    query: "Summarize recent engineering discussions about microservices"
+    evaluation:
+      criteria:
+        - "Summary is comprehensive"
+        - "Key points are captured"
+        - "Tone is professional"
+      scoring: "Evaluator assigns overall grade: A/B/C/D/F"

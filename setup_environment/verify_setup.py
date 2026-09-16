@@ -141,8 +141,8 @@ def main():
     if all(results):
         print("✓ All checks passed!")
         print()
-        print("Ready to proceed to seed data setup")
-        print("  cd ../setup_seed_data")
+        print("Next step: load the seed data")
+        print("  uv run python setup_seed_data/seed_all.py")
         return 0
     else:
         print("✗ Some checks failed. Please fix the issues above.")

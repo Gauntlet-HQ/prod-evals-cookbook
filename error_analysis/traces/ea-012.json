@@ -1,0 +1,35 @@
+{
+  "session_id": "ea-012",
+  "query": "What is our PTO policy, how many customers do we have, and what P0 bugs are open?",
+  "probe": "compound \u2014 three questions in one turn",
+  "response": "PTO policy (Acme Corp)\n- Type: Flexible/unlimited PTO (recommended minimum is 4 weeks / 20 business days per year; this is a minimum, not a maximum).\n- Accrual/rollover/payout: No accrual, no rollover, and no payout upon departure.\n- How to request: Submit in Workday at least 2 weeks in advance for planned time off; manager responds within 48 hours. For emergencies/illness, notify your manager ASAP.\n- Sick leave: Unlimited and separate from PTO; no doctor\u2019s note required for absences under 5 consecutive days.\n- Holidays: 12 paid company holidays (list and 2025 dates are in the policy).\nSource: pto_policy.md\n\nHow many customers do we have?\n- 22 active paying customers (status = active and MRR > 0).\nSource: Analytics DB query via sql_query (SQL shown in tool output)\n\nWhat P0 bugs are open?\n- I did not find any open P0 bugs. The only P0 match returned was already Resolved:\n  - PLAT-1247 \u2013 \u201c[P0] Authentication service returning 500 errors intermittently\u201d \u2013 Status: Resolved\nSource: Jira ticket PLAT-1247 (jira_search results)",
+  "tool_calls": [
+    {
+      "tool_name": "vector_search",
+      "arguments": {
+        "query": "PTO policy Acme Corp paid time off accrual carryover holidays sick leave"
+      },
+      "result": ""
+    },
+    {
+      "tool_name": "sql_query",
+      "arguments": {
+        "question": "How many customers do we currently have? Return total active paying customers as of today."
+      },
+      "result": ""
+    },
+    {
+      "tool_name": "jira_search",
+      "arguments": {
+        "query": "priority = P0 AND status not in (Done, Resolved, Closed) order by updated desc"
+      },
+      "result": ""
+    }
+  ],
+  "retrieved_sources": [],
+  "source_contents": [],
+  "timestamp": "2026-09-16T06:51:36",
+  "duration_seconds": 7.21,
+  "error": null,
+  "annotations": {}
+}

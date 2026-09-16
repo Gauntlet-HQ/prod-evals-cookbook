@@ -1,0 +1,13 @@
+{
+  "session_id": "ea-005",
+  "query": "What is the weather in Denver today?",
+  "probe": "out of scope \u2014 should decline and redirect",
+  "response": "I can\u2019t access live weather data from outside Acme systems, and we don\u2019t have a tool connected to a public weather service.\n\nIf you tell me what source you use (e.g., Weather.gov, Apple Weather, Google Weather) or paste the forecast here, I can help summarize it or flag anything relevant (snow, wind, travel impacts).",
+  "tool_calls": [],
+  "retrieved_sources": [],
+  "source_contents": [],
+  "timestamp": "2026-09-16T06:50:15",
+  "duration_seconds": 1.97,
+  "error": null,
+  "annotations": {}
+}

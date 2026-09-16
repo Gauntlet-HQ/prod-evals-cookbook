@@ -245,8 +245,8 @@ def main():
     if all_passed:
         print("✅ All data seeded successfully!")
         print()
-        print("Next step: Build the agent")
-        print("   cd ../setup_agent")
+        print("Next step: run your first eval")
+        print("   uv run python stage_1_golden_sets/evaluator.py")
         return 0
     else:
         print("❌ Some seeding steps failed. Check the errors above.")

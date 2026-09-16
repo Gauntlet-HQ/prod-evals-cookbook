@@ -1,0 +1,13 @@
+{
+  "session_id": "ea-009",
+  "query": "Did we ever fix it?",
+  "probe": "vague referent \u2014 'it' is undefined",
+  "response": "What is \u201cit\u201d referring to?\n\nIf you tell me one of the following, I can look it up and confirm status (and cite sources like Jira ticket IDs / Slack threads):\n1) Jira ticket key (e.g., ACME-1234) or a short title\n2) What area: auth/login, integrations, mobile, billing, etc.\n3) Where you saw it: which customer, Slack channel, or incident date",
+  "tool_calls": [],
+  "retrieved_sources": [],
+  "source_contents": [],
+  "timestamp": "2026-09-16T06:50:34",
+  "duration_seconds": 2.29,
+  "error": null,
+  "annotations": {}
+}
