@@ -8,11 +8,10 @@ from typing import Any
 
 import psycopg2
 from langchain_core.tools import tool
-from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 
-from config import settings
+from config import chat_model, settings
 
 
 # Database schema for the LLM
@@ -109,11 +108,7 @@ def get_postgres_connection():
 
 def generate_sql(question: str) -> str:
     """Generate SQL from natural language question."""
-    llm = ChatOpenAI(
-        model=settings.openai_model,
-        temperature=0,
-        openai_api_key=settings.openai_api_key,
-    )
+    llm = chat_model()
     
     chain = SQL_GENERATION_PROMPT | llm | StrOutputParser()
     

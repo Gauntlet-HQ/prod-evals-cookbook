@@ -8,12 +8,11 @@ to answer questions about Acme Corp.
 from typing import Annotated, Any
 
 from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
-from langchain_openai import ChatOpenAI
 from langgraph.graph import StateGraph, END
 from langgraph.graph.message import add_messages
 from langgraph.prebuilt import ToolNode
 
-from config import settings
+from config import chat_model, settings
 from vector_search import vector_search
 from sql_agent import sql_query
 from mcp_tools import jira_search, slack_search
@@ -45,6 +44,12 @@ Guidelines:
 - For questions that span multiple domains, use multiple tools
 - Always cite your sources (document names, ticket IDs, channel names)
 - If you can't find information, say so honestly
+- Only answer questions about Acme Corp: its policies, procedures, metrics, customers, people, tickets and discussions.
+  If a question has nothing to do with Acme (general knowledge, weather, news, personal or philosophical questions),
+  do not answer it and do not call any tools. Briefly say you can only help with Acme Corp questions, and suggest
+  one or two things you can help with instead.
+  If a question is about Acme but the information may not exist (e.g. "What's our policy on X?"), it is NOT
+  off-topic: search for it, then say what you did or did not find.
 - Be concise but complete in your answers
 - Format your response as plain text, NOT markdown. Do not use ** for bold or other markdown syntax.
 
@@ -76,12 +81,8 @@ def create_agent(
     model = model or settings.openai_model
     temperature = temperature if temperature is not None else 0
     
-    # Initialize the LLM with tools
-    llm = ChatOpenAI(
-        model=model,
-        temperature=temperature,
-        openai_api_key=settings.openai_api_key,
-    ).bind_tools(TOOLS)
+    # Initialize the LLM with tools (reasoning models ignore temperature)
+    llm = chat_model(model, temperature).bind_tools(TOOLS)
     
     # Store the system prompt for this agent
     agent_system_prompt = system_prompt or DEFAULT_SYSTEM_PROMPT
@@ -163,9 +164,10 @@ def ask_acme(question: str) -> str:
     messages = result["messages"]
     
     # Find the last AI message that isn't just tool calls
+    # (.text, not .content: Responses API replies are lists of content blocks)
     for msg in reversed(messages):
-        if isinstance(msg, AIMessage) and msg.content:
-            return msg.content
+        if isinstance(msg, AIMessage) and msg.text:
+            return str(msg.text)
     
     return "I couldn't generate a response. Please try rephrasing your question."
 
@@ -204,8 +206,8 @@ def ask_acme_with_trace(question: str) -> dict[str, Any]:
     # Get final response
     response = ""
     for msg in reversed(messages):
-        if isinstance(msg, AIMessage) and msg.content:
-            response = msg.content
+        if isinstance(msg, AIMessage) and msg.text:
+            response = str(msg.text)
             break
     
     return {

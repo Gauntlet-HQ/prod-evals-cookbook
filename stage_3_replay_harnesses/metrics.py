@@ -11,10 +11,9 @@ from typing import Any
 # Add parent directory for imports
 sys.path.insert(0, str(Path(__file__).parent.parent / "setup_agent"))
 
-from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
 
-from config import settings
+from config import chat_model
 
 
 # =============================================================================
@@ -118,11 +117,7 @@ def mrr(retrieved: list[str], relevant: list[str]) -> float:
 
 def get_judge_llm():
     """Get LLM for judging."""
-    return ChatOpenAI(
-        model=settings.openai_model,
-        temperature=0,
-        openai_api_key=settings.openai_api_key,
-    )
+    return chat_model()
 
 
 GROUNDEDNESS_PROMPT = ChatPromptTemplate.from_messages([
@@ -182,7 +177,7 @@ def groundedness(response: str, sources: list[str]) -> dict[str, Any]:
     )
     
     # Parse the score from the response
-    content = result.content
+    content = str(result.text)
     score = 0.0
     
     try:
@@ -257,7 +252,7 @@ def faithfulness(response: str, sources: list[str]) -> dict[str, Any]:
         )
     )
     
-    content = result.content
+    content = str(result.text)
     
     # Parse verdict
     score = 1.0 if "FAITHFUL" in content.upper() and "UNFAITHFUL" not in content.upper() else 0.0
@@ -322,7 +317,7 @@ def relevance(question: str, response: str) -> dict[str, Any]:
         )
     )
     
-    content = result.content
+    content = str(result.text)
     score = 3  # Default middle score
     reasoning = content
     
