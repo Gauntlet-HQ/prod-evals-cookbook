@@ -146,7 +146,7 @@ def run_single_case(
         # Extract response
         messages = result.get("messages", [])
         if messages:
-            response = messages[-1].content
+            response = str(messages[-1].text)
         
         # Extract tool usage from messages
         for msg in messages:
